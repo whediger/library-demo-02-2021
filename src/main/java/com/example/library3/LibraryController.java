@@ -12,6 +12,8 @@ public class LibraryController {
     @PostMapping("books")
     @ResponseStatus(HttpStatus.CREATED)
     public void addBooks(){
-
     }
+
+    @GetMapping("books")
+    public String getBooks(){return "[{}]"; }
 }
