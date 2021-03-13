@@ -15,5 +15,5 @@ public class LibraryController {
     }
 
     @GetMapping("books")
-    public String getBooks(){return "[{}]"; }
+    public String getBooks(){return "[{'title': 'zero to one', 'author':'Blake Masters'}]"; }
 }
