@@ -52,4 +52,16 @@ public class BookServiceTests {
                 )
         );
     }
+
+    @Test
+    void findByName() {
+        BookEntity zeroToOne = new BookEntity("zero to one", "Blake Masters");
+        when(mockBookRepository.findByTitle(zeroToOne.getTitle())).thenReturn(zeroToOne);
+
+        BookDto actual = subject.findByTitle(zeroToOne.getTitle());
+
+        assertThat(actual).isEqualTo(
+                new BookDto(zeroToOne.getTitle(), zeroToOne.getAuthor());
+        );
+    }
 }
