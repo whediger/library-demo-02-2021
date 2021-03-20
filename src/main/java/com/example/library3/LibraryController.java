@@ -25,4 +25,9 @@ public class LibraryController {
     public List<BookDto> getBooks(){
         return this.bookService.fetchAll();
     }
+
+    @GetMapping("books/{bookTitle}")
+    public BookDto getBookByName(@PathVariable String bookTitle) {
+        return this.bookService.findByName(bookTitle);
+    }
 }
