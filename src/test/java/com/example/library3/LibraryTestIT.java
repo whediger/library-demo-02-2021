@@ -38,4 +38,28 @@ public class LibraryTestIT {
         .andExpect(jsonPath("[0].title").value("zero to one"))
         .andExpect(jsonPath("[0].author").value("Blake Masters"));
     }
+
+    @Test
+    public void getBookByTitle() throws Exception {
+        BookDto zeroToOne = new BookDto("zero to one", "Blake Masters");
+        BookDto nineteenEightyFour = new BookDto("1984", "George Orwell");
+        BookDto warAndPeace = new BookDto("War and Peace", "Leo Tolstoy");
+
+        mockMvc.perform(post("/books")
+                .content(objectMapper.writeValueAsString(zeroToOne))
+                .contentType(MediaType.APPLICATION_JSON)
+        ).andExpect(status().isCreated());
+        mockMvc.perform(post("/books")
+                .content(objectMapper.writeValueAsString(nineteenEightyFour))
+                .contentType(MediaType.APPLICATION_JSON)
+        ).andExpect(status().isCreated());
+        mockMvc.perform(post("/books")
+                .content(objectMapper.writeValueAsString(warAndPeace))
+                .contentType(MediaType.APPLICATION_JSON)
+        ).andExpect(status().isCreated());
+        mockMvc.perform(get(String.format("/books/%s", nineteenEightyFour.getTitle()))
+        ).andExpect(status().isOk())
+                .andExpect(jsonPath("$.title").value("1984"))
+                .andExpect(jsonPath("$.author").value("George Orwell"));
+    }
 }
