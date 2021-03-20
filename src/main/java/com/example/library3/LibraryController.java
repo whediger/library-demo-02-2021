@@ -28,6 +28,6 @@ public class LibraryController {
 
     @GetMapping("books/{bookTitle}")
     public BookDto getBookByName(@PathVariable String bookTitle) {
-        return this.bookService.findByName(bookTitle);
+        return this.bookService.findByTitle(bookTitle);
     }
 }

@@ -29,4 +29,9 @@ public class BookService {
                 })
                 .collect(Collectors.toList());
     }
+
+    public BookDto findByTitle(String bookTitle) {
+        BookEntity foundBook = bookRepository.findByTitle(bookTitle);
+        return new BookDto(foundBook.getTitle(), foundBook.getAuthor());
+    }
 }
