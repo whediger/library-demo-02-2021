@@ -15,6 +15,11 @@ public class LibraryController {
         this.bookService = bookService;
     }
 
+    @GetMapping("")
+    public String rootPage() {
+        return "{\"message\": \"Welcome to the Library\"}";
+    }
+
     @PostMapping("books")
     @ResponseStatus(HttpStatus.CREATED)
     public void addBooks(@RequestBody BookDto bookDto){
