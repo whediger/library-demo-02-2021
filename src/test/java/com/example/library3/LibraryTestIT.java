@@ -65,6 +65,8 @@ public class LibraryTestIT {
 
     @Test
     public void getRootPage() throws Exception {
-        mockMvc.perform(get("/")).andExpect(status().isOk());
+        mockMvc.perform(get("/"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.message").value("Welcome to the Library"));
     }
 }

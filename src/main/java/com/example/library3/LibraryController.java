@@ -17,7 +17,7 @@ public class LibraryController {
 
     @GetMapping("")
     public String rootPage() {
-        return "";
+        return "{\"message\": \"Welcome to the Library\"}";
     }
 
     @PostMapping("books")
