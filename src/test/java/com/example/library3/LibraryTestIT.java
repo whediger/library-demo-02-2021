@@ -62,4 +62,9 @@ public class LibraryTestIT {
                 .andExpect(jsonPath("$.title").value("1984"))
                 .andExpect(jsonPath("$.author").value("George Orwell"));
     }
+
+    @Test
+    public void getRootPage() throws Exception {
+        mockMvc.perform(get("/")).andExpect(status().isOk());
+    }
 }
