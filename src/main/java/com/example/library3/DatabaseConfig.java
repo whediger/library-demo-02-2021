@@ -15,6 +15,7 @@ public class DatabaseConfig {
     public DataSource dataSource() throws Exception {
         URI dbUri = null;
         try {
+            System.out.println("System.getenv(\"DATABASE_URL\") = <" + System.getenv("DATABASE_URL") + ">");
             dbUri = new URI(System.getenv("DATABASE_URL"));
         } catch (URISyntaxException e) {
             e.printStackTrace();
