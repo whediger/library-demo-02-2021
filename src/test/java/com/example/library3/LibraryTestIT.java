@@ -1,7 +1,6 @@
 package com.example.library3;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.junit.Ignore;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -26,7 +25,6 @@ public class LibraryTestIT {
     ObjectMapper objectMapper;
 
     @Test
-    @Ignore("add book until heroku deploy work")
     public void addBooks() throws Exception {
         BookDto bookDto = new BookDto("zero to one", "Blake Masters");
 
@@ -42,7 +40,6 @@ public class LibraryTestIT {
     }
 
     @Test
-    @Ignore
     public void getBookByTitle() throws Exception {
         BookDto zeroToOne = new BookDto("zero to one", "Blake Masters");
         BookDto nineteenEightyFour = new BookDto("1984", "George Orwell");
