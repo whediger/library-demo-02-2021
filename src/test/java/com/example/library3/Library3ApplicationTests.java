@@ -6,4 +6,10 @@ import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
 class Library3ApplicationTests {
+
+	@Test
+	@Ignore
+	void contextLoads() {
+	}
+
 }
