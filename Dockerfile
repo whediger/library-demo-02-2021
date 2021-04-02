@@ -1,20 +1,18 @@
 # Docker file for two phase build
 # Phase 1 - Build the application .jar file and name it builder
 FROM openjdk:11.0-jdk-slim as builder
-# -- Windows ONLY --
 RUN apt-get update && apt-get install -y dos2unix
-#ENV GRADLE_OPTS=-Dorg.gradle.daemon=false
-# -- End Windows ONLY --
+
 ENV SRC_HOME=/app
 WORKDIR $SRC_HOME
 COPY build.gradle settings.gradle gradlew $SRC_HOME
 COPY gradle $SRC_HOME/gradle
-# -- Windows ONLY --
 RUN dos2unix gradlew
-# -- End Windows ONLY --
 RUN sh gradlew dependencies
+
 COPY src $SRC_HOME/src
 RUN sh gradlew build
+
 
 # Phase 2 - Build container with runtime only to use .jar file within
 FROM openjdk:11.0-jre-slim
