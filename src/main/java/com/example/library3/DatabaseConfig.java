@@ -14,17 +14,8 @@ import java.net.URISyntaxException;
 public class DatabaseConfig {
 
     @Bean
-    public DataSource dataSource() throws Exception {
-        URI dbUri = null;
-        try {
-            System.out.println("System.getenv(\"DATABASE_URL\") = <" + System.getenv("DATABASE_URL") + ">");
-            dbUri = new URI(System.getenv("DATABASE_URL"));
-        } catch (URISyntaxException e) {
-            e.printStackTrace();
-            System.err.println("System.getenv(\"DATABASE_URL\") = <" + System.getenv("DATABASE_URL") + ">");
-            System.out.println("System.getenv(\"DATABASE_URL\") = <" + System.getenv("DATABASE_URL") + ">");
-            throw new Exception("DB URL missing");
-        }
+    public DataSource dataSource() throws URISyntaxException {
+        URI dbUri = new URI(System.getenv("DATABASE_URL"));
 
         String username = dbUri.getUserInfo().split(":")[0];
         String password = dbUri.getUserInfo().split(":")[1];
