@@ -1,0 +1,28 @@
+= Library API
+
+Books
+
+.request
+include::{snippets}/Books/http-request.adoc[]
+
+.response
+include::{snippets}/Books/http-response.adoc[]
+
+Book
+
+.request
+include::{snippets}/Book/http-request.adoc[]
+
+.response
+include::{snippets}/Book/http-response.adoc[]
+
+AddBook
+
+.request
+include::{snippets}/AddBook/http-request.adoc[]
+
+.response
+include::{snippets}/AddBook/http-response.adoc[]
+
+This is an example output for a service running at http://localhost:8080:
+As you can see the format is very simple, and in fact you always get the same message.
