@@ -3,12 +3,16 @@ package com.example.library3;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.restdocs.AutoConfigureRestDocs;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 
 
+import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document;
+import static org.springframework.restdocs.payload.PayloadDocumentation.fieldWithPath;
+import static org.springframework.restdocs.payload.PayloadDocumentation.responseFields;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
@@ -36,7 +40,11 @@ public class LibraryTestIT {
         ).andExpect(status().isOk())
         .andExpect(jsonPath("length()").value(1))
         .andExpect(jsonPath("[0].title").value("zero to one"))
-        .andExpect(jsonPath("[0].author").value("Blake Masters"));
+        .andExpect(jsonPath("[0].author").value("Blake Masters"))
+        .andDo(document("Books", responseFields(
+                fieldWithPath("[0].title").description("Title of Book"),
+                fieldWithPath("[0].author").description("Author of Book")
+        )));
     }
 
     @Test
@@ -48,7 +56,8 @@ public class LibraryTestIT {
         mockMvc.perform(post("/books")
                 .content(objectMapper.writeValueAsString(zeroToOne))
                 .contentType(MediaType.APPLICATION_JSON)
-        ).andExpect(status().isCreated());
+        ).andExpect(status().isCreated())
+                .andDo(document("AddBook"));
         mockMvc.perform(post("/books")
                 .content(objectMapper.writeValueAsString(nineteenEightyFour))
                 .contentType(MediaType.APPLICATION_JSON)
@@ -59,7 +68,10 @@ public class LibraryTestIT {
         ).andExpect(status().isCreated());
         mockMvc.perform(get(String.format("/books/%s", nineteenEightyFour.getTitle()))
         ).andExpect(status().isOk())
-                .andExpect(jsonPath("$.title").value("1984"))
-                .andExpect(jsonPath("$.author").value("George Orwell"));
+                .andExpect(jsonPath("title").value("1984"))
+                .andExpect(jsonPath("author").value("George Orwell"))
+                .andDo(document("Book", responseFields(
+                        fieldWithPath("title").description("Title of Book"),
+                        fieldWithPath("author").description("Author of Book"))));
     }
 }
