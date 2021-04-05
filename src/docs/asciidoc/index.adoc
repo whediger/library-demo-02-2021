@@ -1,0 +1,17 @@
+= Library API
+
+Books
+
+.request
+include::{snippets}/Books/http-request.adoc[]
+
+.response
+include::{snippets}/Books/http-response.adoc[]
+
+AddBook
+
+.request
+include::{snippets}/Add Book/http-request.adoc[]
+
+.response
+include::{snippets}/Add Book/http-response.adoc[]
