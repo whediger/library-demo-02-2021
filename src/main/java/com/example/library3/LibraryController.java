@@ -3,7 +3,6 @@ package com.example.library3;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -29,12 +28,12 @@ public class LibraryController {
     }
 
     @GetMapping("books")
-    public List<BookDto> getBooks(){
+    public List<BookEntity> getBooks(){
         return this.bookService.fetchAll();
     }
 
     @GetMapping("books/{bookTitle}")
-    public BookDto getBookByName(@PathVariable String bookTitle) {
+    public BookEntity getBookByName(@PathVariable String bookTitle) {
         return this.bookService.findByTitle(bookTitle);
     }
 

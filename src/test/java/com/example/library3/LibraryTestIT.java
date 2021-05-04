@@ -45,11 +45,15 @@ public class LibraryTestIT {
         mockMvc.perform(get("/books")
         ).andExpect(status().isOk())
         .andExpect(jsonPath("length()").value(1))
+        .andExpect(jsonPath("[0].id").isNotEmpty())
         .andExpect(jsonPath("[0].title").value("zero to one"))
         .andExpect(jsonPath("[0].author").value("Blake Masters"))
+        .andExpect(jsonPath("[0].reviews").isArray())
         .andDo(document("Books", responseFields(
+                fieldWithPath("[0].id").description("ID of Book"),
                 fieldWithPath("[0].title").description("Title of the Book"),
-                fieldWithPath("[0].author").description("Author of the Book")
+                fieldWithPath("[0].author").description("Author of the Book"),
+                fieldWithPath("[0].reviews").description("Reviews of book")
         )));
     }
 
@@ -133,5 +137,21 @@ public class LibraryTestIT {
                 .andExpect(jsonPath("$.length()").value(2))
                 .andExpect(jsonPath("[0].stars").value(5))
                 .andExpect(jsonPath("[1].stars").value(4));
+
+//        mockMvc.perform(get("/books")
+//        ).andExpect(status().isOk())
+//                .andExpect(jsonPath("length()").value(1))
+//                .andExpect(jsonPath("[0].id").isNotEmpty())
+//                .andExpect(jsonPath("[0].title").value("1984"))
+//                .andExpect(jsonPath("[0].reviews").isArray())
+//                .andExpect(jsonPath("[0].reviews.length()").value(2))
+//                .andExpect(jsonPath("[0].reviews[0]").value(5));
+        mockMvc.perform(get("/books/1984")
+        ).andExpect(status().isOk())
+                .andExpect(jsonPath("$.id").isNotEmpty())
+                .andExpect(jsonPath("$.title").value("1984"))
+                .andExpect(jsonPath("$.reviews").isArray())
+                .andExpect(jsonPath("$.reviews.length()").value(2))
+                .andExpect(jsonPath("$.reviews[0]").value(5));
     }
 }

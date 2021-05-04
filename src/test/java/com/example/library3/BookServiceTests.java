@@ -42,13 +42,13 @@ public class BookServiceTests {
         );
 
         // E Exercise
-        List<BookDto> actual = subject.fetchAll();
+        List<BookEntity> actual = subject.fetchAll();
 
         // A Assert
         assertThat(actual).isEqualTo(
                 List.of(
-                        new BookDto("1984", "George Orwell"),
-                        new BookDto("Zero to One", "Blake Master")
+                        new BookEntity("1984", "George Orwell"),
+                        new BookEntity("Zero to One", "Blake Master")
                 )
         );
     }
@@ -58,10 +58,10 @@ public class BookServiceTests {
         BookEntity zeroToOne = new BookEntity("zero to one", "Blake Masters");
         when(mockBookRepository.findByTitle(zeroToOne.getTitle())).thenReturn(zeroToOne);
 
-        BookDto actual = subject.findByTitle(zeroToOne.getTitle());
+        BookEntity actual = subject.findByTitle(zeroToOne.getTitle());
 
         assertThat(actual).isEqualTo(
-                new BookDto(zeroToOne.getTitle(), zeroToOne.getAuthor())
+                new BookEntity(zeroToOne.getTitle(), zeroToOne.getAuthor())
         );
     }
 }

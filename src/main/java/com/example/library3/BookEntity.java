@@ -1,20 +1,15 @@
 package com.example.library3;
 
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Set;
 
 @Entity
-@EqualsAndHashCode
+@Data
 @NoArgsConstructor
-@Getter
-@Setter
 public class BookEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -23,7 +18,11 @@ public class BookEntity {
     String title;
     String author;
 
+    @OneToMany(mappedBy = "bookEntity")
+    Set<ReviewEntity> reviews;
+
     public BookEntity(String title, String author) {
+        super();
         this.title = title;
         this.author = author;
     }

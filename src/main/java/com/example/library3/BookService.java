@@ -4,7 +4,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 public class BookService {
@@ -21,17 +20,11 @@ public class BookService {
                                 bookDto.getAuthor()));
     }
 
-    public List<BookDto> fetchAll() {
-        return bookRepository.findAll()
-                .stream()
-                .map(bookEntity -> {
-                    return new BookDto(bookEntity.getTitle(), bookEntity.getAuthor());
-                })
-                .collect(Collectors.toList());
+    public List<BookEntity> fetchAll() {
+        return bookRepository.findAll();
     }
 
-    public BookDto findByTitle(String bookTitle) {
-        BookEntity foundBook = bookRepository.findByTitle(bookTitle);
-        return new BookDto(foundBook.getTitle(), foundBook.getAuthor());
+    public BookEntity findByTitle(String bookTitle) {
+        return bookRepository.findByTitle(bookTitle);
     }
 }
