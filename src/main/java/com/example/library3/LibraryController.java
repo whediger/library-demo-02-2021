@@ -10,9 +10,11 @@ import java.util.List;
 public class LibraryController {
 
     BookService bookService;
+    ReviewService reviewService;
 
-    public LibraryController(BookService bookService){
+    public LibraryController(BookService bookService, ReviewService reviewService){
         this.bookService = bookService;
+        this.reviewService = reviewService;
     }
 
     @GetMapping("")
@@ -34,5 +36,11 @@ public class LibraryController {
     @GetMapping("books/{bookTitle}")
     public BookDto getBookByName(@PathVariable String bookTitle) {
         return this.bookService.findByTitle(bookTitle);
+    }
+
+    @PostMapping("reviews")
+    @ResponseStatus(HttpStatus.CREATED)
+    public ReviewDto addReview(@RequestBody ReviewDto reviewDto) {
+        return this.reviewService.create(reviewDto);
     }
 }
