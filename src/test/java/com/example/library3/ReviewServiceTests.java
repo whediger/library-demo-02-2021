@@ -6,6 +6,9 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import java.util.List;
+
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
@@ -30,6 +33,24 @@ public class ReviewServiceTests {
         verify(reviewRepository).save(
                 new ReviewEntity(5, "Made me think", bookEntity)
         );
+    }
+
+    @Test
+    void fetchAll() {
+        BookEntity bookEntity = new BookEntity("1984", "George Orwell");
+        ReviewEntity reviewEntity = new ReviewEntity(5, "Made me think", bookEntity);
+        when(reviewRepository.findAll()).thenReturn(
+                List.of(reviewEntity)
+        );
+
+        List<ReviewDto> actual = reviewService.fetchAll();
+
+        assertThat(actual).isEqualTo(
+                List.of(
+                        new ReviewDto(5, "Made me think", "1984")
+                )
+        );
+
     }
 
 }

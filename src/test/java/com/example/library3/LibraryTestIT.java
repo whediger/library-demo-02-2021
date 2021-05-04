@@ -101,5 +101,12 @@ public class LibraryTestIT {
                 .andExpect(jsonPath("$.review").value("Made me think about my environment."))
                 .andExpect(jsonPath("$.bookTitle").value("1984"));
 
+        mockMvc.perform(get("/reviews")
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("length()").value(1))
+                .andExpect(jsonPath("[0].stars").value(5))
+                .andExpect(jsonPath("[0].review").value("Made me think about my environment."))
+                .andExpect(jsonPath("[0].bookTitle").value("1984"));
     }
 }

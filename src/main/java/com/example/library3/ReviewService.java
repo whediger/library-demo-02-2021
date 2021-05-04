@@ -2,6 +2,9 @@ package com.example.library3;
 
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 @Service
 public class ReviewService {
 
@@ -17,5 +20,13 @@ public class ReviewService {
         BookEntity bookEntity = this.bookRepository.findByTitle(reviewDto.getBookTitle());
         this.reviewRepository.save(new ReviewEntity(reviewDto.getStars(), reviewDto.getReview(), bookEntity));
         return reviewDto;
+    }
+
+    public List<ReviewDto> fetchAll() {
+        return this.reviewRepository.findAll().stream()
+                .map(reviewEntity -> {
+                    return new ReviewDto(reviewEntity.getStars(), reviewEntity.getReview(), reviewEntity.getBookEntity().getTitle());
+                })
+                .collect(Collectors.toList());
     }
 }

@@ -43,4 +43,9 @@ public class LibraryController {
     public ReviewDto postReview(@RequestBody ReviewDto reviewDto) {
         return this.reviewService.create(reviewDto);
     }
+
+    @GetMapping("reviews")
+    public List<ReviewDto> getReviews() {
+        return this.reviewService.fetchAll();
+    }
 }
