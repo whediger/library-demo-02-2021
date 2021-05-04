@@ -1,11 +1,13 @@
 package com.example.library3;
 
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 
 @Entity
 @Data
+@NoArgsConstructor
 public class ReviewEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
