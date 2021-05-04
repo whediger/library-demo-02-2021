@@ -10,6 +10,7 @@ import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 
 
+import javax.transaction.Transactional;
 import java.beans.BeanProperty;
 
 import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document;
@@ -23,6 +24,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @SpringBootTest
 @AutoConfigureMockMvc
 @AutoConfigureRestDocs
+@Transactional
 public class LibraryTestIT {
 
     @Autowired
@@ -80,5 +82,24 @@ public class LibraryTestIT {
         mockMvc.perform(get("/"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.message").value("Welcome to the Library"));
+    }
+
+    @Test
+    public void postReviewForBook() throws Exception {
+        BookDto nineteenEightyFour = new BookDto("1984", "George Orwell");
+        mockMvc.perform(post("/books")
+                .content(objectMapper.writeValueAsString(nineteenEightyFour))
+                .contentType(MediaType.APPLICATION_JSON)
+        ).andExpect(status().isCreated());
+
+        ReviewDto reviewDto = new ReviewDto(5, "Made me think about my environment.", "1984");
+        mockMvc.perform(post("/reviews")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(objectMapper.writeValueAsString(reviewDto)))
+                .andExpect(status().isCreated())
+                .andExpect(jsonPath("$.stars").value(5))
+                .andExpect(jsonPath("$.review").value("Made me think about my environment."))
+                .andExpect(jsonPath("$.bookTitle").value("1984"));
+
     }
 }
