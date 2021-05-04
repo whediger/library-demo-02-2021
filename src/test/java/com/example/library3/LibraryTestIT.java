@@ -107,6 +107,7 @@ public class LibraryTestIT {
                 .andExpect(jsonPath("length()").value(1))
                 .andExpect(jsonPath("[0].stars").value(5))
                 .andExpect(jsonPath("[0].review").value("Made me think about my environment."))
-                .andExpect(jsonPath("[0].bookTitle").value("1984"));
+                .andExpect(jsonPath("[0].bookEntity.id").isNotEmpty())
+                .andExpect(jsonPath("[0].bookEntity.title").value("1984"));
     }
 }

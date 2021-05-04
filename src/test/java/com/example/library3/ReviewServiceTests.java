@@ -43,11 +43,11 @@ public class ReviewServiceTests {
                 List.of(reviewEntity)
         );
 
-        List<ReviewDto> actual = reviewService.fetchAll();
+        List<ReviewEntity> actual = reviewService.fetchAll();
 
         assertThat(actual).isEqualTo(
                 List.of(
-                        new ReviewDto(5, "Made me think", "1984")
+                        reviewEntity
                 )
         );
 

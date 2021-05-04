@@ -3,7 +3,6 @@ package com.example.library3;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -45,7 +44,7 @@ public class LibraryController {
     }
 
     @GetMapping("reviews")
-    public List<ReviewDto> getReviews() {
+    public List<ReviewEntity> getReviews() {
         return this.reviewService.fetchAll();
     }
 }
