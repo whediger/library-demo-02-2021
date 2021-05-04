@@ -101,4 +101,37 @@ public class LibraryTestIT {
                 .andExpect(jsonPath("$.review").value("Really made me think about everything around me"))
                 .andExpect(jsonPath("$.bookTitle").value("1984"));
     }
+
+    @Test
+    public void getReviews() throws Exception {
+        BookDto nineteenEightyFour = new BookDto("1984", "George Orwell");
+        mockMvc.perform(post("/books")
+                .content(objectMapper.writeValueAsString(nineteenEightyFour))
+                .contentType(MediaType.APPLICATION_JSON)
+        ).andExpect(status().isCreated());
+
+        ReviewDto reviewDto1 = new ReviewDto(5, "Really made me think about everything around me", "1984");
+        mockMvc.perform(post("/reviews")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(objectMapper.writeValueAsString(reviewDto1)))
+                .andExpect(status().isCreated())
+                .andExpect(jsonPath("$.stars").value(5))
+                .andExpect(jsonPath("$.review").value("Really made me think about everything around me"))
+                .andExpect(jsonPath("$.bookTitle").value("1984"));
+        ReviewDto reviewDto2 = new ReviewDto(4, "A bit long", "1984");
+        mockMvc.perform(post("/reviews")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(objectMapper.writeValueAsString(reviewDto2)))
+                .andExpect(status().isCreated())
+                .andExpect(jsonPath("$.stars").value(4))
+                .andExpect(jsonPath("$.review").value("A bit long"))
+                .andExpect(jsonPath("$.bookTitle").value("1984"));
+
+        mockMvc.perform(get("/reviews")
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.length()").value(2))
+                .andExpect(jsonPath("[0].stars").value(5))
+                .andExpect(jsonPath("[1].stars").value(4));
+    }
 }
